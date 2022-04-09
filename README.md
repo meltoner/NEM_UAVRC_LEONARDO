@@ -1,8 +1,8 @@
-# NEM UVRC 5
+NEM UVRC 5
 
-Konstantinos Papageorgiou - 2022 - kp@rei.gr
+# NEM Unmaned Vehicle Remote controlled - UVRC
 
-Features :
+## Software Features :
 
 - Software utilises an MPU, GPS, Servo, ESC, magnetometer and a remote control input, in an arduino leonardo.
 - Sensors and accuators are all in classes
@@ -12,12 +12,18 @@ Features :
 - Computes degrees heading at boot time, used as an offcet for the mpu degree heading
 - Derives distance and degree from a target gps LAT LOT
 
+## Hardware
+
 Sensors :
 
 - gps : M8n
 - magmetometer : M8n's HMC5883
 - remote control: flysky F9-ia10b
 - mpu : MPU6050
+
+Other: 
+
+- Arduino Leonrdo
 
 
 
