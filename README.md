@@ -23,7 +23,7 @@ Sensors :
 
 Other: 
 
-- Arduino Leonrdo
-
+- Arduino Leonardo
+- Sparkfun Logic Level Converter Bi-Directional
 
 
