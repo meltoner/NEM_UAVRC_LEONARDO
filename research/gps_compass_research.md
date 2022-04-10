@@ -5,7 +5,8 @@ notes on incorporating also the magnetometer of the gps ublox m8n
 https://www.youtube.com/watch?v=BVP0ny55STQ
 
 HMC5883L is used in ublox 
-community also replied that a ist8310 is used 
+
+https://www.youtube.com/watch?v=vPGChdmfKl0
 
 https://github.com/kriswiner/MPU6050/wiki/Affordable-9-DoF-Sensor-Fusion
 https://github.com/kriswiner/MPU6050HMC5883AHRS
