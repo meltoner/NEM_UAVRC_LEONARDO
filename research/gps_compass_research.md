@@ -5,6 +5,7 @@ notes on incorporating also the magnetometer of the gps ublox m8n
 https://www.youtube.com/watch?v=BVP0ny55STQ
 
 HMC5883L is used in ublox 
+or the ist8310 
 
 https://www.youtube.com/watch?v=vPGChdmfKl0
 
