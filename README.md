@@ -16,13 +16,13 @@ NEM UVRC 5
 
 Sensors :
 
-- gps : M8n
-- magmetometer : M8n's HMC5883
-- remote control: flysky F9-ia10b
-- mpu : MPU6050
+- Gps : M8n
+- Magmetometer : M8n's HMC5883
+- Receiver : flysky F9-ia10b
+- MPU : MPU6050
 
 Other: 
-
+- Transmitter : flysky FS-I6X
 - Arduino Leonardo
 - Sparkfun Logic Level Converter Bi-Directional
 
