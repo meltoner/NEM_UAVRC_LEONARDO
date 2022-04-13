@@ -8,16 +8,18 @@
 #include "Arduino.h" 
 #include <AltSoftSerial.h>
 #include <TinyGPS++.h>
+#include "Context.h"
 
 class Gps{
   public:
     Gps(int pin);
-    void setup(float sensors[]);
-    void apply(float sensors[]);
-    void returnHome(float sensors[]);    
+    void setup(Context &_context);
+    void apply();
+    void returnHome();    
     boolean isLocked;
     void setTarget(double LAT, double LNG);
   private:
+    Context *context;
     double TARGET_LAT;
     double TARGET_LNG;
     TinyGPSPlus gps;

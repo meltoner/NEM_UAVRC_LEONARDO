@@ -6,12 +6,17 @@
 #include "Arduino.h"
 #include "Steer.h"
 #include <Servo.h>
+#include "Remote.h"
+#include "Context.h"
 
 Steer::Steer(int pin){  
   _pin = pin;
 }
 
-void Steer::setup(){
+void Steer::setup(Context &_context, Remote &_remote){
+  context = &_context;
+  remote = &_remote;
+
   steer.attach(_pin); 
   setSteer(center);
   Serial.println("Steer ready.");
@@ -24,12 +29,8 @@ void Steer::setSteer(int value){
   }  
 }
 
-boolean Steer::hasTarget(byte ext_sensors[]){
-  return ext_sensors[6] == 255 ;
-}
-
 int Steer::getDegreeDiff(){
-     int diff = target - degree;
+     int diff = target - context->sensors[0];
 
      if(diff > 180)
       diff = diff -360;
@@ -41,30 +42,26 @@ int Steer::getDegreeDiff(){
       diff = 45;
 
      if(diff < -45)
-      diff=-45;
+      diff = -45;
     return diff;
 }
 
-boolean Steer::isSwitchCHalf(byte ext_sensors[]){
-   return ((int)ext_sensors[8]) == 127;
-}
+void Steer::apply(){
 
-void Steer::apply(float sensors[], byte ext_sensors[], int current_degree){
-   degree = current_degree;
-   if(hasTarget( ext_sensors )){
+   if(remote->isSwitchA()){
       setSteer( center - getDegreeDiff() );
    }else{
-      int control = map(ext_sensors[0], 0, 255, -50, 50);
+      int control = map(context->ext_sensors[0], 0, 255, -50, 50);
       setSteer( center - control );
    }
 }
 
-boolean Steer::hasNewDegree(byte ext_sensors[]){
-  if(hasTarget(ext_sensors)){
-    int control = map(ext_sensors[0], 0, 255, 0, 40) - 20;
-    if(abs(control) > 2 && !(isSwitchCHalf(ext_sensors)))
+boolean Steer::hasNewDegree(){
+  if(remote->isSwitchA()){
+    int control = map(context->ext_sensors[0], 0, 255, 0, 40) - 20;
+    if(abs(control) > 2 && !(remote->isSwitchCHalf()))
       target += control / 2;
   }
-  if(ext_sensors[7] == 255)
-    target = degree;
+  if(remote->isSwitchB())
+    target = context->sensors[0];;
 }

@@ -15,8 +15,8 @@ class Context{
     Context(int pin);
     void setup();
     void apply();
-
-    // lat, lng, distance, degrees, x, y, z, mag // where z matches to degrees
+    double latlng[2]={0,0};
+    // free, free, distance, degrees, x, y, z, mag // where z matches to degrees
     float sensors[SENSORS] = {0,0,0,0,0,0,0,0};
     byte ext_sensors[EXT_SENSORS] = {0,0,0,0,0,0,0,0,0,0};
  

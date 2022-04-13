@@ -8,15 +8,17 @@
 #include "Arduino.h"
 #include <Wire.h>
 #include <MPU6050_light.h>
+#include "Context.h"
 
 class Mpu{
   public:
     Mpu(int pin);
-    void setup(float sensors[]);
-    void apply(float sensors[]);
+    void setup(Context &_context);
+    void apply();
     void update();
     int degree = 0;
   private:
+    Context *context;
     int _pin;
 };
 

@@ -7,11 +7,13 @@
 #include "Gps.h" 
 #include <AltSoftSerial.h>
 #include <TinyGPS++.h>
+#include "Context.h"
 
-Gps::Gps(int pin){
-}
+Gps::Gps(int pin){}
 
-void Gps::setup(float sensors[]){
+void Gps::setup(Context &_context){
+  context = &_context;
+
   isLocked = false;
   gpsPort.begin(9600);
 
@@ -20,7 +22,7 @@ void Gps::setup(float sensors[]){
   Serial.println("Gps ready.");
 }
 
-void Gps::apply(float sensors[]){
+void Gps::apply(){
   while (gpsPort.available())
     gps.encode(gpsPort.read());   
 
@@ -28,9 +30,9 @@ void Gps::apply(float sensors[]){
    isLocked = true;
 
   if(isLocked){
-   sensors[0] = gps.location.lat();
-   sensors[1] = gps.location.lng();
-   returnHome(sensors);
+   context->latlng[0] = gps.location.lat();
+   context->latlng[1] = gps.location.lng();
+   returnHome();
   }
 }
 
@@ -39,7 +41,7 @@ void Gps::setTarget(double LAT, double LNG){
   TARGET_LNG = LNG;
 }
 
-void Gps::returnHome(float sensors[]){    
-  sensors[2] = gps.distanceBetween(sensors[0], sensors[1], TARGET_LAT, TARGET_LNG) / 1000.0;
-  sensors[3] = gps.courseTo(sensors[0], sensors[1], TARGET_LAT,TARGET_LNG) * 1000;
+void Gps::returnHome(){    
+  context->sensors[2] = gps.distanceBetween(context->latlng[0], context->latlng[1], TARGET_LAT, TARGET_LNG) / 1000.0;
+  context->sensors[3] = gps.courseTo(context->latlng[0], context->latlng[1], TARGET_LAT,TARGET_LNG) * 1000;
 }

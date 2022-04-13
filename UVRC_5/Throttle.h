@@ -7,16 +7,18 @@
 
 #include "Arduino.h"
 #include <Servo.h>
+#include "Context.h"
 
 class Throttle{
   public:
     Throttle(int pin);
-    void setup();
-    void apply(float sensors[], byte ext_sensors[]);
+    void setup(Context &_context);
+    void apply();
     void setThrottle(int value, int limiter);
     int transferFunction(int value, int theshold, int add, int divider);
     int throttleValue = 0;
   private:
+    Context *context;
     Servo throttle;
     int _pin;
 };

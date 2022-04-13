@@ -7,13 +7,16 @@
 #include "Mag.h"
 #include <Adafruit_Sensor.h>
 #include <Adafruit_HMC5883_U.h>
+#include "Context.h"
 
 Mag::Mag(int pin){  
   _pin = pin;
   mag = Adafruit_HMC5883_Unified(12345);
 }
 
-void Mag::setup(float sensors[]){
+void Mag::setup(Context &_context){ 
+  context = &_context;
+
   while(!mag.begin()) 
     Serial.println("HMC5883 not detected!");
 
@@ -21,14 +24,15 @@ void Mag::setup(float sensors[]){
   mag.getSensor(&sensor);  
   
   for(int i = 0; i < 10; i++){
-    apply(sensors);
+    apply();
     delay(200);
   }
-  zoffset = sensors[7];
+
+  zoffset = context->sensors[7];
   Serial.println("Mag sensor ready"); 
 }
 
-void Mag::apply(float sensors[]){
+void Mag::apply(){
   mag.getEvent(&event);    
   float heading = atan2(event.magnetic.x, event.magnetic.y);  // are inverted
   heading = heading -3.3;
@@ -45,5 +49,6 @@ void Mag::apply(float sensors[]){
   if(heading < 0)
     heading = 360 + heading;
     
-  sensors[7] = heading;
+  context->sensors[7] = heading;
+
 }

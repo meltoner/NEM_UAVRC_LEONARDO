@@ -34,54 +34,49 @@ Context context(0);
 
 //-----------------------------------------
 
-boolean isSwitchCHalf(){
-   return ((int)context.ext_sensors[8]) == 127;
-}
-
-boolean isSwitchCFull(){
-  return context.ext_sensors[8] == 255 ;
-}
-
 boolean updateGpsDegreeTarget(){
-  if(isSwitchCHalf())
+  if(remote.isSwitchCHalf())
    steer.target = (int)context.sensors[3];
 
-  if(isSwitchCFull() && gps.isLocked ){
-    gps.setTarget( (double)context.sensors[0], (double)context.sensors[1]);
+  if(remote.isSwitchCFull() && gps.isLocked ){
+    gps.setTarget( context.latlng[0], context.latlng[1]);
   }
 }
 
 //-----------------------------------------
 
-
 void setup() {
+
   context.setup();
-  throttle.setup();
+  throttle.setup(context);
+
   delay(2000);
-  Serial.println("Powering up"); 
-  remote.setup();
-  mag.setup(context.sensors);
-  mpu.setup(context.sensors);  
-  gps.setup(context.sensors);
-  steer.setup();
+  Serial.println("Powering up");
+
+  remote.setup(context);
+  mag.setup(context);
+  mpu.setup(context);
+  gps.setup(context);
+  steer.setup(context, remote);
+
   invoker.setup();
   Serial.println("Setup done");
 }
 
 void apply_very_fast_invoker(){   
-   mag.apply(context.sensors);
-   mpu.apply(context.sensors);   
+   mag.apply();
+   mpu.apply();   
 }
 
 void apply_fast_invoker(){
-   remote.apply(context.ext_sensors);
-   steer.apply(context.sensors, context.ext_sensors, mpu.degree);
-   throttle.apply(context.sensors, context.ext_sensors);
+   remote.apply();
+   steer.apply();
+   throttle.apply();
 }
 
 void apply_invoker(){
-  gps.apply(context.sensors);
-  steer.hasNewDegree(context.ext_sensors);
+  gps.apply();
+  steer.hasNewDegree();
   updateGpsDegreeTarget();
 }
 

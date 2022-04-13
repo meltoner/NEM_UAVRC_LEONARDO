@@ -7,26 +7,27 @@
 
 #include "Arduino.h"
 #include <Servo.h>
+#include "Remote.h"
+#include "Context.h"
 
 class Steer{
   public:
     Steer(int pin);
-    void setup();
-    void apply(float sensors[], byte ext_sensors[], int current_degree);
+    void setup(Context &_context, Remote &_remote);
+    void apply();
     void setSteer(int value);
-    boolean hasTarget(byte ext_sensors[]);
     int getDegreeDiff();
-    boolean isSwitchCHalf(byte ext_sensors[]);
-    boolean hasNewDegree(byte ext_sensors[]);
+    boolean hasNewDegree();
 
     int center = 94;  
     int steerValue = center;
 
     int target = 0; //vehicle target heading
-    int degree = 0; //vehicle heading
 
   private:
     int _pin;
+    Context *context;
+    Remote *remote;
     Servo steer;
 };
 

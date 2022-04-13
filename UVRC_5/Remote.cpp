@@ -13,21 +13,40 @@ Remote::Remote(int pin){
   
 }
 
-void Remote::setup(){
+void Remote::setup(Context &_context){
+  context = &_context;
   IBus.begin(Serial1);
   delay(200);
   Serial.println("IBUS ready.");
 }
 
-void Remote::apply(byte ext_sensors[]){
-  for(int i = 0; i < EXT_SENSORS; i++)
-   ext_sensors[i] = (byte)readChannel(i, 0, 255, 0);  
-}
-
 int Remote::readChannel(byte channelInput, int minLimit, int maxLimit, int defaultValue){ 
-  //https://www.youtube.com/watch?v=JZQoHmLqZYg
   uint16_t ch = IBus.readChannel(channelInput);
   if (ch < 100) return defaultValue;
   return map(ch, 1000, 2000, minLimit, maxLimit);
 }
 
+void Remote::apply(){
+  for(int i = 0; i < EXT_SENSORS; i++)
+   context->ext_sensors[i] = (byte)readChannel(i, 0, 255, 0);
+}
+
+boolean Remote::isSwitchA(){
+  return context->ext_sensors[6] == 255 ;
+}
+
+boolean Remote::isSwitchB(){
+  return context->ext_sensors[7] == 255 ;
+}
+
+boolean Remote::isSwitchCHalf(){
+   return context->ext_sensors[8] == 127;
+}
+
+boolean Remote::isSwitchCFull(){
+  return context->ext_sensors[8] == 255 ;
+}
+
+boolean Remote::isSwitchD(){
+  return context->ext_sensors[9] == 255 ;
+}

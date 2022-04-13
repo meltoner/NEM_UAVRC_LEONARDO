@@ -6,20 +6,23 @@
 #include "Arduino.h"
 #include "Throttle.h"
 #include <Servo.h>
+#include "Context.h"
 
 Throttle::Throttle(int pin){  
   _pin = pin;
 }
 
-void Throttle::setup(){
+void Throttle::setup(Context &_context){
+  context = &_context;
+
   throttle.attach(_pin); 
   throttle.writeMicroseconds(900); // send "stop" signal to ESC. Also necessary to arm the ESC.
   delay(1000); // delay to allow the ESC to recognize the stopped signal.
   Serial.println("Throttle ready.");
 }
 
-void Throttle::apply(float sensors[], byte ext_sensors[]){
-  setThrottle(transferFunction(ext_sensors[2], 15, 20, 300), ext_sensors[4]); 
+void Throttle::apply(){
+  setThrottle(transferFunction(context->ext_sensors[2], 15, 20, 300), context->ext_sensors[4]); 
 }
 
 void Throttle::setThrottle(int value, int limiter){

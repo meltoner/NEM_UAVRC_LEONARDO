@@ -7,13 +7,22 @@
 
 #include "Arduino.h"
 #include <IBusBM.h>
+#include "Context.h"
 
 class Remote{
   public:
     Remote(int pin);
-    void setup();
-    void apply(byte ext_sensors[]);
+    void setup(Context &_context);
+    void apply();
     int readChannel(byte channelInput, int minLimit, int maxLimit, int defaultValue);
+    
+    boolean isSwitchA();
+    boolean isSwitchB();
+    boolean isSwitchCHalf();
+    boolean isSwitchCFull();
+    boolean isSwitchD();    
+    Context *context;
+    
   private:
     IBusBM IBus; // IBus object 
 };
