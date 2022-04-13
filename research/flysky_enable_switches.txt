@@ -1,0 +1,4 @@
+https://www.youtube.com/watch?v=JZQoHmLqZYg
+set all rotational in sequence and last the switches from left to right
+
+righ side stick, leftside stick, top potentiometer, right potentiometer, left switch next switch ...
