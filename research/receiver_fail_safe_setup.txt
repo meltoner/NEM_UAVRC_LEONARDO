@@ -1,0 +1,2 @@
+setup fail safe
+menu > system > rx > failsafe > chanell 10 > on and turn on the 4th switch. save and press the update button on the receiver. 
