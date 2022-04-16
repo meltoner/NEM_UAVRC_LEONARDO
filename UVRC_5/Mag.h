@@ -16,6 +16,8 @@ class Mag{
     void setup(Context &_context);
     void apply();
     int pruneDegrees(float value);
+    float getOffset();
+    void initMagOffset();
     void updateMagOffset();
   private:
     Context *context;

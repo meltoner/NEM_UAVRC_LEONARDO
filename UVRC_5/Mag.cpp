@@ -24,12 +24,11 @@ void Mag::setup(Context &_context){
   mag.getSensor(&sensor);  
   
   for(int i = 0; i < 10; i++){
-    apply();
-    updateMagOffset();
+    apply();    
     delay(200);
   }
-  
 
+  initMagOffset();  
   Serial.println("Mag sensor ready"); 
 }
 
@@ -52,20 +51,42 @@ void Mag::apply(){
 
   context->positional[3] = heading;
 
-  context->derivatives[1] = pruneDegrees(context->positional[2] + context->derivatives[0]);
+  context->derivatives[1] = context->positional[2] + context->derivatives[0];
+
   if(context->derivatives[1] < 0)
-    context->derivatives[1] = 360 + context->derivatives[2];
+    context->derivatives[1] = 360 + context->derivatives[1];
+
+  if(context->derivatives[1] > 360)
+    context->derivatives[1] = context->derivatives[1] - 360;
+
+  //========
+
+  int diff = context->targets[0] - context->derivatives[1];
+
+  if(diff > 180)
+    diff = diff -360;
+
+   if(diff < -180)
+    diff = diff + 360;
+
+  context->derivatives[2] = diff;
+} 
+
+float Mag::getOffset(){
+  float mag = context->positional[3];
+  float mpu = context->positional[2];
+
+  return  mag - mpu;
+  
+}
+
+void Mag::initMagOffset(){  
+    context->derivatives[0] = getOffset();
 }
 
 void Mag::updateMagOffset(){
-  boolean isHorizontal = abs(context->positional[0]) < 7 ;
-
-  if(isHorizontal){
-    float offset = pruneDegrees(context->positional[3]) - context->positional[2];
-    context->derivatives[0] = context->derivatives[0] * 0.3 + offset * 0.7;
-  }
+  if(abs(context->positional[0]) < 7) // is horizotal
+    initMagOffset();
+    //context->derivatives[0] = context->derivatives[0]*0.8 + getOffset()*0.2;
 }
 
-int Mag::pruneDegrees(float value){
-  return ((int)value) % 360;    
-}

@@ -17,7 +17,7 @@ void Throttle::setup(Context &_context){
 
   throttle.attach(_pin); 
   throttle.writeMicroseconds(900); // send "stop" signal to ESC. Also necessary to arm the ESC.
-  delay(1000); // delay to allow the ESC to recognize the stopped signal.
+  delay(5000); // delay to allow the ESC to recognize the stopped signal.
   Serial.println("Throttle ready.");
 }
 

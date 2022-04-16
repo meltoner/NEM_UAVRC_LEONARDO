@@ -15,7 +15,7 @@ class Invoker{
     int apply();
   private:
     int _length = 5;
-    int intervals[5] = {10, 50, 100, 500, 5000};
+    int intervals[5] = {10, 50, 100, 500, 2000};
     unsigned long now = millis();
     unsigned long timers[5] = {now, now, now, now, now}; 
 };

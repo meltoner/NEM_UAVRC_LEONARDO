@@ -35,6 +35,7 @@ Context context(0);
 //-----------------------------------------
 
 boolean updateGpsDegreeTarget(){
+  
   if(remote.isSwitchCHalf())
    steer.target = (int)context.derivatives[1];
 
@@ -54,9 +55,9 @@ void setup() {
   Serial.println("Powering up");
 
   remote.setup(context);
-  steer.setup(context, remote);
   mag.setup(context);
   mpu.setup(context);
+  steer.setup(context, remote);
   gps.setup(context);
 
   invoker.setup();

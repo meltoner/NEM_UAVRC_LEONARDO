@@ -37,5 +37,5 @@ void Mpu::update(){
 void Mpu::apply(){
     context->positional[0] = sensor.getAngleX(); 
     context->positional[1] = sensor.getAngleY();
-    context->positional[2] = -sensor.getAngleZ();
+    context->positional[2] = context->pruneDegrees(-sensor.getAngleZ());
 }

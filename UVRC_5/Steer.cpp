@@ -33,20 +33,14 @@ void Steer::setSteer(int value){
 }
 
 int Steer::getDegreeDiff(){
-     int diff = target - context->derivatives[1];
 
-     if(diff > 180)
-      diff = diff -360;
+  if(context->derivatives[2] > 30)
+   return 30;
 
-     if(diff < -180)
-      diff = diff + 360;
-            
-     if(diff > 45)
-      diff = 45;
-
-     if(diff < -45)
-      diff = -45;
-    return diff;
+  if(context->derivatives[2] < -30)
+   return -30;
+    
+  return (int)(context->derivatives[2]*0.9);
 }
 
 void Steer::apply(){
@@ -67,5 +61,5 @@ boolean Steer::hasNewDegree(){
 //      target += control / 2;
 //  }
   if(remote->isSwitchB())
-    target = context->derivatives[1];
+    context->targets[0] = context->derivatives[1];
 }
