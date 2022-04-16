@@ -32,7 +32,8 @@ void Gps::apply(){
   if(isLocked){
    context->latlng[0] = gps.location.lat();
    context->latlng[1] = gps.location.lng();
-   returnHome();
+   gpsTarget();
+
   }
 }
 
@@ -41,7 +42,7 @@ void Gps::setTarget(double LAT, double LNG){
   TARGET_LNG = LNG;
 }
 
-void Gps::returnHome(){ 
-  context->targets[0] = gps.courseTo(context->latlng[0], context->latlng[1], TARGET_LAT,TARGET_LNG) * 1000;  
-  context->targets[1] = gps.distanceBetween(context->latlng[0], context->latlng[1], TARGET_LAT, TARGET_LNG) / 1000.0;  
+void Gps::gpsTarget(){ 
+  context->targets[1] = gps.courseTo(context->latlng[0], context->latlng[1], TARGET_LAT, TARGET_LNG) * 1000;  
+  context->targets[2] = gps.distanceBetween(context->latlng[0], context->latlng[1], TARGET_LAT, TARGET_LNG) / 1000.0;  
 }

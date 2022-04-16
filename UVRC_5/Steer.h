@@ -16,11 +16,11 @@ class Steer{
     void setup(Context &_context, Remote &_remote);
     void apply();
     void setSteer(int value);
-    int getDegreeDiff();
+    int getHeadingDifference();
     boolean hasNewDegree();
 
-    int center = 94;
-    int target = 0; //vehicle target heading
+    int center = 86;
+    //int target = 0; //vehicle target heading
 
   private:
     int _pin;

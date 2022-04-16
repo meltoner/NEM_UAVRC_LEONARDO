@@ -14,35 +14,28 @@
 // remote control: flysky F9-ia10b
 // mpu : MPU6050
 
+
+#include "Context.h"
+#include "Invoker.h"
+
 #include "Mag.h"
 #include "Gps.h" 
 #include "Mpu.h" 
 #include "Steer.h"
 #include "Throttle.h"
 #include "Remote.h"
-#include "Invoker.h"
-#include "Context.h"
+#include "Home.h"
 
-Mag mag(7);
+Context context(0);
+Invoker invoker(0);
+
+Mag mag(0);
 Gps gps(0);
 Mpu mpu(4);
 Steer steer(6);
 Throttle throttle(9);
 Remote remote(0);
-Invoker invoker(0);
-Context context(0);
-
-//-----------------------------------------
-
-boolean updateGpsDegreeTarget(){
-  
-  if(remote.isSwitchCHalf())
-   steer.target = (int)context.derivatives[1];
-
-  if(remote.isSwitchCFull() && gps.isLocked ){
-    gps.setTarget( context.latlng[0], context.latlng[1]);
-  }
-}
+Home home(0);
 
 //-----------------------------------------
 
@@ -59,9 +52,16 @@ void setup() {
   mpu.setup(context);
   steer.setup(context, remote);
   gps.setup(context);
+  home.setup(context);
 
   invoker.setup();
   Serial.println("Setup done");
+
+}
+
+boolean updateGpsDegreeTarget(){
+  if(remote.isSwitchC() && gps.isLocked )
+    gps.setTarget( context.latlng[0], context.latlng[1]);
 }
 
 void apply_very_fast_invoker(){   
@@ -79,10 +79,11 @@ void apply_invoker(){
   gps.apply();
   steer.hasNewDegree();
   updateGpsDegreeTarget();
+  home.apply();
 }
 
-void apply_slow_invoker(){
-  context.apply();
+void apply_slow_invoker(){ 
+  //  context.apply();
 }
 
 void apply_very_slow_invoker(){

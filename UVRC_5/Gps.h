@@ -15,7 +15,7 @@ class Gps{
     Gps(int pin);
     void setup(Context &_context);
     void apply();
-    void returnHome();    
+    void gpsTarget();    
     boolean isLocked;
     void setTarget(double LAT, double LNG);
   private:

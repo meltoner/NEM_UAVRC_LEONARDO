@@ -4,10 +4,10 @@
 */
 
 #include "Arduino.h"
+#include "Context.h"
 #include "Mag.h"
 #include <Adafruit_Sensor.h>
 #include <Adafruit_HMC5883_U.h>
-#include "Context.h"
 
 Mag::Mag(int pin){  
   _pin = pin;
@@ -75,9 +75,7 @@ void Mag::apply(){
 float Mag::getOffset(){
   float mag = context->positional[3];
   float mpu = context->positional[2];
-
   return  mag - mpu;
-  
 }
 
 void Mag::initMagOffset(){  

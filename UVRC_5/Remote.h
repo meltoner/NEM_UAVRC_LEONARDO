@@ -19,7 +19,7 @@ class Remote{
     boolean isSwitchA();
     boolean isSwitchB();
     boolean isSwitchCHalf();
-    boolean isSwitchCFull();
+    boolean isSwitchC();
     boolean isSwitchD();    
     Context *context;
     

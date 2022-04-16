@@ -6,9 +6,9 @@
 #define Mag_h
 
 #include "Arduino.h"
+#include "Context.h"
 #include <Adafruit_Sensor.h>
 #include <Adafruit_HMC5883_U.h>
-#include "Context.h"
 
 class Mag{
   public:

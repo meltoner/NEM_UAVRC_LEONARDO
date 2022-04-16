@@ -43,7 +43,7 @@ boolean Remote::isSwitchCHalf(){
    return context->ext_sensors[8] == 127;
 }
 
-boolean Remote::isSwitchCFull(){
+boolean Remote::isSwitchC(){
   return context->ext_sensors[8] == 255 ;
 }
 
