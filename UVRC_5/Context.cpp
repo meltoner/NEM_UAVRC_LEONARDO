@@ -11,34 +11,39 @@ Context::Context(int pin){
 }
 
 void Context::setup(){
-    Serial.begin(115200);
+    Serial.begin(9600);
 }
 
 
+void reflectSensor(float value, int precission){
+  Serial.print(value, precission);
+  Serial.print(" ");
+}
+
 void Context::apply(){
- //Serial.print(Serial.print(-sensors[6]+mag.zoffset, 2));
- //Serial.print(" ");
  
-  for(int i = 0; i < 2; i++){
-      Serial.print(latlng[i], 6);
-      Serial.print(" ");
-  }
+ 
+  reflectSensor(derivatives[1], 0);
 
-  for(int i = 0; i < SENSORS; i++){
-      Serial.print(sensors[i], 2);
-      Serial.print(" ");
-  }
+  for(int i = 0; i < 4; i++)
+    reflectSensor(positional[i], 1);
 
-  for(int i = 0; i < EXT_SENSORS; i++){
-   Serial.print(ext_sensors[i]);
-   Serial.print(" ");
-  }
 
-  // Serial.print(throttle.throttleValue);
-  // Serial.print(" ");
-  // Serial.print(steer.steerValue);
-  // Serial.print(" ");
-  // Serial.print(steer.target); 
+  reflectSensor(targets[0], 1);
+  reflectSensor(targets[1], 1);
+
+  reflectSensor(actuators[0], 0);
+  reflectSensor(actuators[1], 0);
+  
+  reflectSensor(latlng[0], 6);
+  reflectSensor(latlng[1], 6);
+
+
+  for(int i = 0; i < EXT_SENSORS; i++)
+    reflectSensor(ext_sensors[i], 0);
+
+
+  
   Serial.println(""); 
 
 }

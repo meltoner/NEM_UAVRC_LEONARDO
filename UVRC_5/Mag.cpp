@@ -25,22 +25,23 @@ void Mag::setup(Context &_context){
   
   for(int i = 0; i < 10; i++){
     apply();
+    updateMagOffset();
     delay(200);
   }
+  
 
-  zoffset = context->sensors[7];
   Serial.println("Mag sensor ready"); 
 }
 
 void Mag::apply(){
-  mag.getEvent(&event);    
-  float heading = atan2(event.magnetic.x, event.magnetic.y);  // are inverted
+  mag.getEvent(&event);
+  
+  float heading = atan2(event.magnetic.x, event.magnetic.y);
   heading = heading -3.3;
-
-  // Find yours here: http://www.magnetic-declination.com/
   
   if(heading < 0)
     heading += 2 * PI;
+
   if(heading > 2 * PI)
     heading -= 2 * PI;
     
@@ -48,7 +49,23 @@ void Mag::apply(){
 
   if(heading < 0)
     heading = 360 + heading;
-    
-  context->sensors[7] = heading;
 
+  context->positional[3] = heading;
+
+  context->derivatives[1] = pruneDegrees(context->positional[2] + context->derivatives[0]);
+  if(context->derivatives[1] < 0)
+    context->derivatives[1] = 360 + context->derivatives[2];
+}
+
+void Mag::updateMagOffset(){
+  boolean isHorizontal = abs(context->positional[0]) < 7 ;
+
+  if(isHorizontal){
+    float offset = pruneDegrees(context->positional[3]) - context->positional[2];
+    context->derivatives[0] = context->derivatives[0] * 0.3 + offset * 0.7;
+  }
+}
+
+int Mag::pruneDegrees(float value){
+  return ((int)value) % 360;    
 }

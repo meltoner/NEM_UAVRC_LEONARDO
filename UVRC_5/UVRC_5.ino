@@ -36,7 +36,7 @@ Context context(0);
 
 boolean updateGpsDegreeTarget(){
   if(remote.isSwitchCHalf())
-   steer.target = (int)context.sensors[3];
+   steer.target = (int)context.derivatives[1];
 
   if(remote.isSwitchCFull() && gps.isLocked ){
     gps.setTarget( context.latlng[0], context.latlng[1]);
@@ -54,10 +54,10 @@ void setup() {
   Serial.println("Powering up");
 
   remote.setup(context);
+  steer.setup(context, remote);
   mag.setup(context);
   mpu.setup(context);
   gps.setup(context);
-  steer.setup(context, remote);
 
   invoker.setup();
   Serial.println("Setup done");
@@ -85,6 +85,7 @@ void apply_slow_invoker(){
 }
 
 void apply_very_slow_invoker(){
+  mag.updateMagOffset();
 }
 
 void run_invoker(int i){

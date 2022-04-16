@@ -41,7 +41,7 @@ void Gps::setTarget(double LAT, double LNG){
   TARGET_LNG = LNG;
 }
 
-void Gps::returnHome(){    
-  context->sensors[2] = gps.distanceBetween(context->latlng[0], context->latlng[1], TARGET_LAT, TARGET_LNG) / 1000.0;
-  context->sensors[3] = gps.courseTo(context->latlng[0], context->latlng[1], TARGET_LAT,TARGET_LNG) * 1000;
+void Gps::returnHome(){ 
+  context->targets[0] = gps.courseTo(context->latlng[0], context->latlng[1], TARGET_LAT,TARGET_LNG) * 1000;  
+  context->targets[1] = gps.distanceBetween(context->latlng[0], context->latlng[1], TARGET_LAT, TARGET_LNG) / 1000.0;  
 }

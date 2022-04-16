@@ -16,7 +16,6 @@ class Throttle{
     void apply();
     void setThrottle(int value, int limiter);
     int transferFunction(int value, int theshold, int add, int divider);
-    int throttleValue = 0;
   private:
     Context *context;
     Servo throttle;

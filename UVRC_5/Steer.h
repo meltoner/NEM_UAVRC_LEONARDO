@@ -19,9 +19,7 @@ class Steer{
     int getDegreeDiff();
     boolean hasNewDegree();
 
-    int center = 94;  
-    int steerValue = center;
-
+    int center = 94;
     int target = 0; //vehicle target heading
 
   private:

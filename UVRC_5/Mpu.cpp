@@ -27,7 +27,6 @@ void Mpu::setup(Context &_context){
   Serial.println("Do not move");
   delay(1000); 
   sensor.calcOffsets();
-
   Serial.println("MPU ready.");
 }
 
@@ -36,13 +35,7 @@ void Mpu::update(){
 }
 
 void Mpu::apply(){
-    context->sensors[4] = sensor.getAngleX();
-    context->sensors[5] = sensor.getAngleY();
-    context->sensors[6] = sensor.getAngleZ(); 
-    
-    degree = -((int)context->sensors[6]) % 360;    
-    if(degree < 0)
-      degree += 360;
-
-    context->sensors[0] = degree;
+    context->positional[0] = sensor.getAngleX(); 
+    context->positional[1] = sensor.getAngleY();
+    context->positional[2] = -sensor.getAngleZ();
 }

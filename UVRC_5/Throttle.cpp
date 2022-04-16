@@ -29,8 +29,8 @@ void Throttle::setThrottle(int value, int limiter){
   if(value > limiter)
     value = limiter;
 
-  if(throttleValue != value){
-    throttleValue = value;
+  if(context->actuators[1] != value){
+    context->actuators[1] = value;
     int pwmVal = map(value, 0, 255, 1000, 2000); // maps to PWM value.
     throttle.writeMicroseconds(pwmVal); // Send signal to ESC.  
   }  

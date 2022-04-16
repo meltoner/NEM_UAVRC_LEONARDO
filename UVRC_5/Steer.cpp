@@ -20,17 +20,20 @@ void Steer::setup(Context &_context, Remote &_remote){
   steer.attach(_pin); 
   setSteer(center);
   Serial.println("Steer ready.");
+
+  target = context->targets[0];
 }
 
 void Steer::setSteer(int value){
-  if(steerValue != value){
-    steerValue = value;
+
+  if(context->actuators[0] != value){
+    context->actuators[0] = value;
     steer.write(value);  
   }  
 }
 
 int Steer::getDegreeDiff(){
-     int diff = target - context->sensors[0];
+     int diff = target - context->derivatives[1];
 
      if(diff > 180)
       diff = diff -360;
@@ -54,14 +57,15 @@ void Steer::apply(){
       int control = map(context->ext_sensors[0], 0, 255, -50, 50);
       setSteer( center - control );
    }
+
 }
 
 boolean Steer::hasNewDegree(){
-  if(remote->isSwitchA()){
-    int control = map(context->ext_sensors[0], 0, 255, 0, 40) - 20;
-    if(abs(control) > 2 && !(remote->isSwitchCHalf()))
-      target += control / 2;
-  }
+//  if(remote->isSwitchA()){
+//    int control = map(context->ext_sensors[0], 0, 255, 0, 40) - 20;
+//    if(abs(control) > 2 && !(remote->isSwitchCHalf()))
+//      target += control / 2;
+//  }
   if(remote->isSwitchB())
-    target = context->sensors[0];;
+    target = context->derivatives[1];
 }

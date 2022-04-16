@@ -16,7 +16,6 @@ class Mpu{
     void setup(Context &_context);
     void apply();
     void update();
-    int degree = 0;
   private:
     Context *context;
     int _pin;
