@@ -14,15 +14,15 @@ Throttle::Throttle(int pin){
 
 void Throttle::setup(Context &_context){
   context = &_context;
-
   throttle.attach(_pin); 
   throttle.writeMicroseconds(900); // send "stop" signal to ESC. Also necessary to arm the ESC.
-  delay(5000); // delay to allow the ESC to recognize the stopped signal.
+  delay(1000); // delay to allow the ESC to recognize the stopped signal.
   Serial.println("Throttle ready.");
 }
 
 void Throttle::apply(){
-  setThrottle(transferFunction(context->ext_sensors[2], 15, 20, 300), context->ext_sensors[4]); 
+  if(context->ext_sensors[9] != 255)
+    setThrottle(transferFunction(context->ext_sensors[2], 15, 20, 300), context->ext_sensors[4]); 
 }
 
 void Throttle::setThrottle(int value, int limiter){

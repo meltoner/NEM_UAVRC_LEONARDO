@@ -21,28 +21,30 @@ void Context::reflectSensor(float value, int precission){
 }
 
 void Context::apply(){
- 
-  reflectSensor(derivatives[0], 0); //offset
-  reflectSensor(derivatives[1], 0); //heading
-  reflectSensor(derivatives[2], 0); // diff from target heading
-//  reflectSensor(positional[2], 1); // mpu heading
-//  reflectSensor(positional[3], 1); // mag heading
 
-  for(int i = 0; i < 4; i++)
-    reflectSensor(positional[i], 1);
 
+//  reflectSensor(derivatives[0], 0); //offset
+//  reflectSensor(derivatives[1], 0); //heading
+//  reflectSensor(derivatives[2], 0); // diff from target heading
+////  reflectSensor(positional[2], 1); // mpu heading
+////  reflectSensor(positional[3], 1); // mag heading
+//
+//  for(int i = 0; i < 4; i++)
+//    reflectSensor(positional[i], 1);
+//
   reflectSensor(targets[0], 1); // target heading
-  reflectSensor(targets[1], 1); // target distance
-
-  reflectSensor(actuators[0], 0); // steer
-  reflectSensor(actuators[1], 0); // throttle
-  
-  reflectSensor(latlng[0], 6);
-  reflectSensor(latlng[1], 6);
-
-  for(int i = 0; i < 10; i++)
-    reflectSensor(ext_sensors[i], 0);
-  
+  reflectSensor(targets[1], 1); // gps target heading
+  reflectSensor(targets[2], 1); // target distance
+//
+//  reflectSensor(actuators[0], 0); // steer
+//  reflectSensor(actuators[1], 0); // throttle
+//  
+//  reflectSensor(latlng[0], 6);
+//  reflectSensor(latlng[1], 6);
+//
+//  for(int i = 0; i < 10; i++)
+//    reflectSensor(ext_sensors[i], 0);
+//  
   Serial.println(""); 
 
 }

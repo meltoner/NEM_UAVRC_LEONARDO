@@ -83,7 +83,7 @@ void Mag::initMagOffset(){
 }
 
 void Mag::updateMagOffset(){
-  if(abs(context->positional[0]) < 7) // is horizotal
+  if(abs(context->positional[0]) < 5) // is horizotal
     initMagOffset();
     //context->derivatives[0] = context->derivatives[0]*0.8 + getOffset()*0.2;
 }

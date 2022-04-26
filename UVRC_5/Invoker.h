@@ -14,10 +14,10 @@ class Invoker{
     void setup();
     int apply();
   private:
-    int _length = 5;
-    int intervals[5] = {10, 50, 100, 500, 2000};
+    int _length = 6;
+    int intervals[6] = {10, 52, 104, 506, 1008, 10000};
     unsigned long now = millis();
-    unsigned long timers[5] = {now, now, now, now, now}; 
+    unsigned long timers[6] = {now, now, now, now, now}; 
 };
 
 #endif

@@ -7,7 +7,7 @@
 #include "Mpu.h"
 
 #include <Wire.h>
-#include <MPU6050_light.h>
+#include "MPU6050_light.h"
 #include "Context.h"
 
 Mpu::Mpu(int pin){  
@@ -20,7 +20,9 @@ void Mpu::setup(Context &_context){
   context = &_context;
 
   Wire.begin();
-
+  Wire.setClock(400000); // 400kHz I2C clock. Comment this line if having compilation difficulties
+  Wire.setWireTimeout(3000, true); //timeout value in uSec
+  
   while(sensor.begin() != 0)
     Serial.println("MPU6050 not detected!");
 

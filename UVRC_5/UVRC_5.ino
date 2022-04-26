@@ -25,6 +25,8 @@
 #include "Throttle.h"
 #include "Remote.h"
 #include "Home.h"
+#include "Blink.h"
+#include <EEPROM.h>
 
 Context context(0);
 Invoker invoker(0);
@@ -36,37 +38,31 @@ Steer steer(6);
 Throttle throttle(9);
 Remote remote(0);
 Home home(0);
+Blink blink(0);
 
 //-----------------------------------------
 
 void setup() {
 
   context.setup();
+  blink.setup(context);
   throttle.setup(context);
-
+  mpu.setup(context);
   delay(2000);
   Serial.println("Powering up");
-
   remote.setup(context);
   mag.setup(context);
-  mpu.setup(context);
   steer.setup(context, remote);
   gps.setup(context);
-  home.setup(context);
-
+  home.setup(context, remote, gps);
   invoker.setup();
   Serial.println("Setup done");
 
 }
 
-boolean updateGpsDegreeTarget(){
-  if(remote.isSwitchC() && gps.isLocked )
-    gps.setTarget( context.latlng[0], context.latlng[1]);
-}
-
-void apply_very_fast_invoker(){   
+void apply_very_fast_invoker(){
    mag.apply();
-   mpu.apply();   
+   mpu.apply();
 }
 
 void apply_fast_invoker(){
@@ -78,16 +74,17 @@ void apply_fast_invoker(){
 void apply_invoker(){
   gps.apply();
   steer.hasNewDegree();
-  updateGpsDegreeTarget();
   home.apply();
 }
 
 void apply_slow_invoker(){ 
-  //  context.apply();
+  //context.apply();
+  blink.apply();
 }
 
 void apply_very_slow_invoker(){
-  mag.updateMagOffset();
+  
+  home.apply();
 }
 
 void run_invoker(int i){
@@ -97,10 +94,12 @@ void run_invoker(int i){
       case 2: apply_invoker(); break;
       case 3: apply_slow_invoker(); break;
       case 4: apply_very_slow_invoker(); break;
+      case 5: mag.updateMagOffset();break;
+      case 100: break;
     }
 }
 
 void loop(){
- mpu.update();
- run_invoker(invoker.apply());
+     mpu.update(); 
+     run_invoker(invoker.apply());
 }

@@ -18,6 +18,7 @@ int Invoker::apply(){
    if ((now - timers[i]) > intervals[i]) {
     timers[i] = now;
     return i;
-   }
+   }   
   }
+  return 100;
 }

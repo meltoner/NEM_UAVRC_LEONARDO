@@ -6,9 +6,8 @@
 #define Mpu_h
 
 #include "Arduino.h"
-#include <Wire.h>
-#include <MPU6050_light.h>
 #include "Context.h"
+
 
 class Mpu{
   public:
