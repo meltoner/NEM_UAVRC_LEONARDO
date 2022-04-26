@@ -11,6 +11,7 @@ NEM UVRC 5
 - Boots esc motor, and applies a non liner transfer function to the speed remote input
 - Computes degrees heading at boot time, used as an offcet for the mpu degree heading
 - Derives distance and degree from a target gps LAT LOT
+- Return to home on signal loss
 
 ## Hardware
 
