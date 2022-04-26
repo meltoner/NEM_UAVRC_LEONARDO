@@ -1,5 +1,3 @@
-NEM UVRC 5
-
 # NEM Unmanned Vehicle Remote controlled - UVRC
 
 ## Software Features :
