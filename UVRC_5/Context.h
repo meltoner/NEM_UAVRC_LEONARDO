@@ -23,6 +23,7 @@ class Context{
     float targets[3] = {0, 0, 0}; // heading target, target gps degree, target gps distance meters
     byte ext_sensors[10] = {0,0,0,0,0,0,0,0,0,0}; // flysky gradient, switches
     float voltage = 0;
+    byte capacity = 0;
     byte actuators[2] = {0, 0}; // servo, speed
   
     // invoker variables

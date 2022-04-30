@@ -1,5 +1,5 @@
 /*
-  Battery.h - Library for wraping the functions controling the Battery 
+  Battery.h - Library for wraping the functions controling the Battery power levels
   Created Konstantinos Papageorgiou  
 */
 #ifndef Battery_h
