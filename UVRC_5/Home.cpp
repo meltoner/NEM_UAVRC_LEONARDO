@@ -21,8 +21,11 @@ void Home::apply(){
 
   // Update home
   if(remote->isSwitchC() && gps->isLocked ){
+    context->intervals[5]=503;
     gps->setTarget( context->latlng[0], context->latlng[1]);
     context->targets[0] = context->targets[1];
+  }else{
+    context->intervals[5]=1003;
   }
   
   // set gps target heading and speed to target

@@ -26,8 +26,10 @@ void Gps::apply(){
   while (gpsPort.available())
     gps.encode(gpsPort.read());   
 
-  if(!isLocked && gps.location.lat() != 0.0)
+  if(!isLocked && gps.location.lat() != 0.0){
+   context->intervals[5]=context->intervals[5]-1000;
    isLocked = true;
+  }
 
   if(isLocked){
    context->latlng[0] = gps.location.lat();

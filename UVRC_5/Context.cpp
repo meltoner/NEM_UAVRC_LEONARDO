@@ -21,30 +21,43 @@ void Context::reflectSensor(float value, int precission){
 }
 
 void Context::apply(){
+  // todo this consumes a lot of memory is there any other way to do it
 
+  // mpu: x, y, z, mag: z
+  for(int i = 0; i < 4; i++)
+    reflectSensor(positional[i], 1);
 
-//  reflectSensor(derivatives[0], 0); //offset
-//  reflectSensor(derivatives[1], 0); //heading
-//  reflectSensor(derivatives[2], 0); // diff from target heading
-////  reflectSensor(positional[2], 1); // mpu heading
-////  reflectSensor(positional[3], 1); // mag heading
-//
-//  for(int i = 0; i < 4; i++)
-//    reflectSensor(positional[i], 1);
-//
-  reflectSensor(targets[0], 1); // target heading
-  reflectSensor(targets[1], 1); // gps target heading
-  reflectSensor(targets[2], 1); // target distance
-//
-//  reflectSensor(actuators[0], 0); // steer
-//  reflectSensor(actuators[1], 0); // throttle
-//  
-//  reflectSensor(latlng[0], 6);
-//  reflectSensor(latlng[1], 6);
-//
-//  for(int i = 0; i < 10; i++)
-//    reflectSensor(ext_sensors[i], 0);
-//  
+  // 0 {mag offset}, 1 {true heading (mpu z + mag offset)}, 2 {difference of true heading and target heading}
+  for(int i = 0; i < 3; i++)
+    reflectSensor(derivatives[i], 1);// offset, heading
+
+  // Battery voltage
+  reflectSensor(voltage, 1); 
+
+  // Target heading
+  reflectSensor(targets[0], 1); 
+
+  // GPS return to home target heading
+  reflectSensor(targets[1], 1);
+
+  // Gps return to home target distance in meters
+  reflectSensor(targets[2], 1); 
+  
+  // Servo Steer value
+  reflectSensor(actuators[0], 0);
+
+  // Throttle
+  reflectSensor(actuators[1], 0); 
+
+  // GPS latitute  
+  reflectSensor(latlng[0], 6);
+  // GPS longditude
+  reflectSensor(latlng[1], 6);
+
+  //Flysky remote control values
+  for(int i = 0; i < 10; i++)
+    reflectSensor(ext_sensors[i], 0);
+  
   Serial.println(""); 
 
 }

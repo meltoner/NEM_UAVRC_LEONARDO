@@ -26,6 +26,7 @@
 #include "Remote.h"
 #include "Home.h"
 #include "Blink.h"
+#include "Battery.h"
 #include <EEPROM.h>
 
 Context context(0);
@@ -39,6 +40,7 @@ Throttle throttle(9);
 Remote remote(0);
 Home home(0);
 Blink blink(0);
+Battery battery(0);
 
 //-----------------------------------------
 
@@ -54,8 +56,9 @@ void setup() {
   mag.setup(context);
   steer.setup(context, remote);
   gps.setup(context);
+  battery.setup(context);
   home.setup(context, remote, gps);
-  invoker.setup();
+  invoker.setup(context);
   Serial.println("Setup done");
 
 }
@@ -78,13 +81,25 @@ void apply_invoker(){
 }
 
 void apply_slow_invoker(){ 
+  //every 0.5 second
+  //printout all context enviromental variables
   //context.apply();
+}
+
+void heartBeat(){
+  //dynamic periodicity 2s no gps, 1sec gps lock, 0.5 seconds returing to home active.
   blink.apply();
 }
 
-void apply_very_slow_invoker(){
-  
+void apply_slower_invoker(){
+  //every 1 second
   home.apply();
+  battery.apply();
+}
+
+void updateMagOffset(){
+  //10 seconds period
+  mag.updateMagOffset();
 }
 
 void run_invoker(int i){
@@ -93,8 +108,9 @@ void run_invoker(int i){
       case 1: apply_fast_invoker(); break;
       case 2: apply_invoker(); break;
       case 3: apply_slow_invoker(); break;
-      case 4: apply_very_slow_invoker(); break;
-      case 5: mag.updateMagOffset();break;
+      case 4: apply_slower_invoker(); break;
+      case 5: heartBeat(); break;
+      case 6: updateMagOffset();break;
       case 100: break;
     }
 }

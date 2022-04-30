@@ -7,17 +7,16 @@
 #define Invoker_h
 
 #include "Arduino.h"
+#include "Context.h"
 
 class Invoker{
   public:
     Invoker(int length);
-    void setup();
+    void setup(Context &_context);
     int apply();
   private:
-    int _length = 6;
-    int intervals[6] = {10, 52, 104, 506, 1008, 10000};
-    unsigned long now = millis();
-    unsigned long timers[6] = {now, now, now, now, now}; 
+    Context *context;
+    
 };
 
 #endif
