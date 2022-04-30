@@ -10,6 +10,7 @@
 - Computes degrees heading at boot time, used as an offcet for the mpu degree heading
 - Derives distance and degree from a target gps LAT LOT
 - Return to home on signal loss
+- pending-Detection of low battery and return to home
 
 ## Hardware
 
@@ -19,6 +20,7 @@ Sensors :
 - Magmetometer : M8n's HMC5883
 - Receiver : flysky F9-ia10b
 - MPU : MPU6050
+- Voltage sensor 0-25v MH-electronic
 
 Other: 
 - Transmitter : flysky FS-I6X
