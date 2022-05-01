@@ -16,7 +16,8 @@ Steer::Steer(int pin){
 void Steer::setup(Context &_context, Remote &_remote){
   context = &_context;
   remote = &_remote;
-  steer.attach(_pin); 
+  steer.attach(_pin);
+  on = true;
   setSteer(center);
   Serial.println("Steer ready.");
 }
@@ -30,15 +31,38 @@ int Steer::getHeadingDifference(){
 }
 
 void Steer::setSteer(int value){
-  if(context->actuators[0] != value)
+  if(context->actuators[0] != value){
+    applied = context->now;
     steer.write(context->actuators[0] = value);  
+  }
 }
 
 void Steer::apply(){
-   if(remote->isSwitchA())
-      setSteer( center - getHeadingDifference() );
-   else
-      setSteer( center - map(context->ext_sensors[0], 0, 255, -50, 50) );
+
+  // steering angle derivation
+  int value = center;  
+  if(remote->isSwitchA())
+    value = value - getHeadingDifference();
+  else
+    value = value - map(context->ext_sensors[0], 0, 255, -50, 50);
+
+ // save power when reached center
+  if(context->actuators[0] == value && abs(value - center)<4 ){
+    if(on && (context->now - applied) > 1000  ){
+      Serial.print("stopping");
+      steer.detach();
+      on = false;      
+    }
+  }else{
+    if(!on){
+      steer.attach(_pin);
+      on = true;
+    }
+  }
+
+  if(on)
+    setSteer( value );
+
 }
 
 boolean Steer::hasNewDegree(){

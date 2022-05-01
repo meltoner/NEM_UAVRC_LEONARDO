@@ -24,6 +24,8 @@ class Steer{
 
   private:
     int _pin;
+    unsigned long applied = 0;
+    boolean on = false;
     Context *context;
     Remote *remote;
     Servo steer;

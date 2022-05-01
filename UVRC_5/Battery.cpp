@@ -17,7 +17,7 @@ void Battery::setup(Context &_context){
 
 void Battery::apply(){
   // to do - stop motors momenteraly to get batter level
-  context->voltage = ((((int)(analogRead(0)/4.092)))/10);
+  context->voltage =  ((analogRead(0)/4.092)/10);
   
   // abstract to % based on range 6v to 7.4v    
   context->capacity = (byte)(context->voltage<6?0:(context->voltage-6)* 71.428);

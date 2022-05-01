@@ -83,7 +83,7 @@ void apply_invoker(){
 void apply_slow_invoker(){ 
   //every 0.5 second
   //printout all context enviromental variables
-  //context.apply();
+  context.apply();
 }
 
 void heartBeat(){
