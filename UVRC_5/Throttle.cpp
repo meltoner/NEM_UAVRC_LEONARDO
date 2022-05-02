@@ -30,6 +30,11 @@ void Throttle::setThrottle(int value, int limiter){
     value = limiter;
 
   if(context->actuators[1] != value){
+
+    if(value - context->actuators[1] > 40){
+      value = context->actuators[1] * 0.95 + value * 0.05;
+    }
+
     context->actuators[1] = value;
     int pwmVal = map(value, 0, 255, 1000, 2000); // maps to PWM value.
     throttle.writeMicroseconds(pwmVal); // Send signal to ESC.  
