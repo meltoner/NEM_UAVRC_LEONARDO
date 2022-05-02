@@ -16,12 +16,9 @@ class Gps{
     void setup(Context &_context);
     void apply();
     void processTarget();    
-    boolean isLocked;
-    void setTarget(double LAT, double LNG);
+
   private:
     Context *context;
-    double TARGET_LAT;
-    double TARGET_LNG;
     TinyGPSPlus gps;
     AltSoftSerial gpsPort; //5 ,13    
 };

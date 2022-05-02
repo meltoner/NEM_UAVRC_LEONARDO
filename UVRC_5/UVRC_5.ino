@@ -54,10 +54,10 @@ void setup() {
   Serial.println("Powering up");
   remote.setup(context);
   mag.setup(context);
-  steer.setup(context, remote);
+  steer.setup(context);
   gps.setup(context);
   battery.setup(context);
-  home.setup(context, remote, gps);
+  home.setup(context);
   invoker.setup(context);
   Serial.println("Setup done");
 
@@ -87,7 +87,7 @@ void apply_slow_invoker(){
 }
 
 void heartBeat(){
-  //dynamic periodicity 2s no gps, 1sec gps lock, 0.5 seconds returing to home active.
+  //dynamic periodicity 2s no gps, 1sec gps lock, 0.5 seconds returing to home active, 0.1 second when power less than 30%.
   blink.apply();
 }
 

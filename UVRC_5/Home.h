@@ -7,18 +7,14 @@
 
 #include "Arduino.h" 
 #include "Context.h"
-#include "Gps.h" 
-#include "Remote.h"
 
 class Home{
   public:
     Home(int pin);
-    void setup(Context &_context, Remote &_remote, Gps &_gps);
+    void setup(Context &_context);
     void apply();
   private:
     Context *context;
-    Remote *remote;
-    Gps *gps;
 };
 
 #endif

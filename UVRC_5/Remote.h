@@ -1,7 +1,8 @@
 /*
-  Remote.h - Library for wraping the functions controling the Remote control i/o
+  Remote.h - Library for wraping the functions controling the remote control i/o
   Created Konstantinos Papageorgiou  
 */
+
 #ifndef Remote_h
 #define Remote_h
 
@@ -15,14 +16,7 @@ class Remote{
     void setup(Context &_context);
     void apply();
     int readChannel(byte channelInput, int minLimit, int maxLimit, int defaultValue);
-    
-    boolean isSwitchA();
-    boolean isSwitchB();
-    boolean isSwitchCHalf();
-    boolean isSwitchC();
-    boolean isSwitchD();    
     Context *context;
-    
   private:
     IBusBM IBus; // IBus object 
 };

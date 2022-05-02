@@ -7,13 +7,12 @@
 
 #include "Arduino.h"
 #include <Servo.h>
-#include "Remote.h"
 #include "Context.h"
 
 class Steer{
   public:
     Steer(int pin);
-    void setup(Context &_context, Remote &_remote);
+    void setup(Context &_context);
     void apply();
     void setSteer(int value);
     int getHeadingDifference();
@@ -27,7 +26,6 @@ class Steer{
     unsigned long applied = 0;
     boolean on = false;
     Context *context;
-    Remote *remote;
     Servo steer;
 };
 

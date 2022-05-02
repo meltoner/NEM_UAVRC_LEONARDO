@@ -35,7 +35,6 @@ void Context::apply(){
 //  for(int i = 0; i < 3; i++)
 //    reflectSensor(derivatives[i], 1);// offset, heading
 //
-//
 //  // Target heading
 //  reflectSensor(targets[0], 1); 
 //
@@ -68,4 +67,29 @@ int Context::pruneDegrees(float value){
   if(value < 0)
     return 360 + (((int)value) % 360);
   return ((int)value) % 360;
-} 
+}
+
+boolean Context::isSwitchA(){
+  return ext_sensors[6] == 255 ;
+}
+
+boolean Context::isSwitchB(){
+  return ext_sensors[7] == 255 ;
+}
+
+boolean Context::isSwitchCHalf(){
+   return ext_sensors[8] == 127;
+}
+
+boolean Context::isSwitchC(){
+  return ext_sensors[8] == 255 ;
+}
+
+boolean Context::isSwitchD(){
+  return ext_sensors[9] == 255 ;
+}
+
+void Context::setGPSTarget(double LAT, double LNG){
+  TARGET_LAT = LAT;
+  TARGET_LNG = LNG;
+}

@@ -6,16 +6,14 @@
 #include "Arduino.h"
 #include "Steer.h"
 #include <Servo.h>
-#include "Remote.h"
 #include "Context.h"
 
 Steer::Steer(int pin){  
   _pin = pin;
 }
 
-void Steer::setup(Context &_context, Remote &_remote){
+void Steer::setup(Context &_context){
   context = &_context;
-  remote = &_remote;
   steer.attach(_pin);
   on = true;
   setSteer(center);
@@ -40,16 +38,15 @@ void Steer::setSteer(int value){
 void Steer::apply(){
 
   // steering angle derivation
-  int value = center;  
-  if(remote->isSwitchA())
+  int value = center;
+  if(context->isSwitchA())
     value = value - getHeadingDifference();
   else
     value = value - map(context->ext_sensors[0], 0, 255, -50, 50);
 
- // save power when reached center
+  // save power when reached center
   if(context->actuators[0] == value && abs(value - center)<4 ){
-    if(on && (context->now - applied) > 1000  ){
-      Serial.print("stopping");
+    if(on && (context->now - applied) > 1000  ){    
       steer.detach();
       on = false;      
     }
@@ -66,6 +63,6 @@ void Steer::apply(){
 }
 
 boolean Steer::hasNewDegree(){
-  if(remote->isSwitchB())
+  if(context->isSwitchB())
     context->targets[0] = context->derivatives[1];
 }
