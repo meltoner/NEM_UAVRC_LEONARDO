@@ -5,7 +5,7 @@
 
 #include "Arduino.h"
 #include "Context.h"
-
+#include <EEPROM.h>
 
 Context::Context(int pin){  
   _pin = pin;
@@ -13,6 +13,8 @@ Context::Context(int pin){
 
 void Context::setup(){
     Serial.begin(9600);
+    EEPROM.get(0, TARGET_LAT);
+    EEPROM.get(sizeof(long), TARGET_LNG);
 }
 
 void Context::reflectSensor(float value, int precission){
@@ -24,8 +26,8 @@ void Context::apply(){
   // todo this consumes a lot of memory is there any other way to do it
 
 //  // Battery voltage
-  reflectSensor(capacity, 1); 
-  reflectSensor(voltage, 1); 
+//  reflectSensor(capacity, 1); 
+//  reflectSensor(voltage, 1); 
 
 //  // mpu: x, y, z, mag: z
 //  for(int i = 0; i < 4; i++)
@@ -42,10 +44,10 @@ void Context::apply(){
 //  reflectSensor(targets[1], 1);
 //
 // // Gps return to home target distance in meters
-//  reflectSensor(targets[2], 1); 
+  reflectSensor(targets[2], 1); 
 //  
 //  // Servo Steer value
-  reflectSensor(actuators[0], 0);
+//  reflectSensor(actuators[0], 0);
 //
 //  // Throttle
   reflectSensor(actuators[1], 0); 
@@ -55,6 +57,8 @@ void Context::apply(){
 //  // GPS longditude
 //  reflectSensor(latlng[1], 6);
 //
+
+
 //  //Flysky remote control values
 //  for(int i = 0; i < 10; i++)
 //    reflectSensor(ext_sensors[i], 0);
@@ -92,4 +96,6 @@ boolean Context::isSwitchD(){
 void Context::setGPSTarget(double LAT, double LNG){
   TARGET_LAT = LAT;
   TARGET_LNG = LNG;
+  EEPROM.put(0, LAT);
+  EEPROM.put(sizeof(long), LNG);
 }

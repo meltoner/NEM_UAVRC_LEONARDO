@@ -20,8 +20,9 @@ class Context{
     boolean isSwitchB();
     boolean isSwitchCHalf();
     boolean isSwitchC();
-    boolean isSwitchD();   
+    boolean isSwitchD();
     void setGPSTarget(double LAT, double LNG);
+
 
     // Enviroment values
     //-----------------------
@@ -30,7 +31,11 @@ class Context{
     double latlng[2] = {0, 0}; // gps position
     double TARGET_LAT = 37.9584512; //Akropolis
     double TARGET_LNG = 23.7502464;
-    
+    byte toHomeSpeed = 40;
+    float toHomeSpeedWeight = 1;
+
+    boolean toHomeActive = false;
+
     // Positional related values
     float positional[4] = {0,0,0,0}; // x, y, z, magz
     float derivatives[3] = {0, 0, 0}; // offset, headings,target heading diff
@@ -42,6 +47,7 @@ class Context{
     // Power related
     float voltage = 0;
     byte capacity = 0;
+    boolean isLowBattery = false;
 
     // Server and motor values
     byte actuators[2] = {0, 0}; // servo, speed

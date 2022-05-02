@@ -21,8 +21,11 @@ void Throttle::setup(Context &_context){
 }
 
 void Throttle::apply(){
-  if(!context->isSwitchD())
-    setThrottle(transferFunction(context->ext_sensors[2], 15, 20, 300), context->ext_sensors[4]); 
+
+  if(context->toHomeActive)    
+    setThrottle( (int)( (float)context->toHomeSpeed * context->toHomeSpeedWeight) , 50);    
+  else
+    setThrottle(transferFunction(context->ext_sensors[2], 15, 20, 300), context->ext_sensors[4]);
 }
 
 void Throttle::setThrottle(int value, int limiter){

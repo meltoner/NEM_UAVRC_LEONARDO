@@ -21,14 +21,13 @@ void Gps::apply(){
   while (gpsPort.available())
     gps.encode(gpsPort.read());   
 
-  if(!context->isGPSLocked && gps.location.lat() != 0.0){
-   context->intervals[5] = 1003;
-   context->isGPSLocked = true;
-  }
-
+  context->latlng[0] = gps.location.lat();
+  context->latlng[1] = gps.location.lng();
+  
+  context->isGPSLocked = context->latlng[0] != 0.0;
+  
   if(context->isGPSLocked){
-   context->latlng[0] = gps.location.lat();
-   context->latlng[1] = gps.location.lng();
+   context->intervals[5] = 1003;
    processTarget();
   }
 

@@ -14,21 +14,31 @@ void Home::setup(Context &_context){
 }
 
 void Home::apply(){
-  // Update home
-  if(context->isSwitchC() && context->isGPSLocked ){
-    context->intervals[5] = 503;
+  // Update return to home gps target
+  if( context->isSwitchC() && context->isGPSLocked ){    
     context->setGPSTarget( context->latlng[0], context->latlng[1]);
     context->targets[0] = context->targets[1];
   }
 
-  // set gps target heading and speed to target
-  if(context->isSwitchA() && context->isSwitchD() && context->isGPSLocked){
-    
+  context->toHomeActive = context->isSwitchA() && context->isSwitchD() && context->isGPSLocked;
+  
+  // Derive target heading and speed from gps target
+  if(context->toHomeActive){  
     context->targets[0] = context->targets[1];
 
-    if(context->targets[2] > 10)
-      context->ext_sensors[2] = 80;
-    else
-      context->ext_sensors[2] = 0;
+    if(context->toHomeSpeedWeight == 0){
+      context->toHomeSpeedWeight = 1;
+
+
+      if(context->targets[2] > 10)
+        context->toHomeSpeedWeight = 1;
+      else
+        context->toHomeSpeedWeight = 0.7;
+
+    }else{
+      context->toHomeSpeedWeight = 0;
+    }
+
   }
+
 }

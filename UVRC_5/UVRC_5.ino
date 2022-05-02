@@ -29,7 +29,6 @@
 // - Arduino Leonardo
 // - Sparkfun Logic Level Converter Bi-Directional
 
-
 #include "Context.h"
 #include "Invoker.h"
 
@@ -64,8 +63,10 @@ void setup() {
   context.setup();
   blink.setup(context);
   throttle.setup(context);
+
   mpu.setup(context);
   delay(2000);
+
   Serial.println("Powering up");
   remote.setup(context);
   mag.setup(context);
@@ -79,14 +80,14 @@ void setup() {
 }
 
 void apply_very_fast_invoker(){
-   mag.apply();
-   mpu.apply();
+  mag.apply();
+  mpu.apply();
 }
 
 void apply_fast_invoker(){
-   remote.apply();
-   steer.apply();
-   throttle.apply();
+  remote.apply();
+  steer.apply();
+  throttle.apply();
 }
 
 void apply_invoker(){
@@ -96,13 +97,13 @@ void apply_invoker(){
 }
 
 void apply_slow_invoker(){ 
-  //every 0.5 second
-  //printout all context enviromental variables
+  //every 0.5 second printout allenviromental variables
   context.apply();
 }
 
 void heartBeat(){
-  //dynamic periodicity 2s no gps, 1sec gps lock, 0.5 seconds returing to home active, 0.1 second when power less than 30%.
+  //dynamic periodicity 
+  // Every : 2s when no gps, 1sec when gps lock, 0.5 seconds when returing to home is active, 0.1 second when power is less than 30%.
   blink.apply();
 }
 
@@ -131,6 +132,6 @@ void run_invoker(int i){
 }
 
 void loop(){
-     mpu.update(); 
-     run_invoker(invoker.apply());
+  mpu.update(); 
+  run_invoker(invoker.apply());
 }
