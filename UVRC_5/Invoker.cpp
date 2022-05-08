@@ -17,7 +17,7 @@ void Invoker::setup(Context &_context){
 
 int Invoker::apply(){
   context->now = millis();
-  for(int i = 0; i < 7; i++)
+  for(int i = 0; i < 8; i++)
    if ((context->now - context->timers[i]) > context->intervals[i]) {
     context->timers[i] = context->now;
     return i;

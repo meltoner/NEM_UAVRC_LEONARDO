@@ -13,6 +13,7 @@ class Home{
     Home(int pin);
     void setup(Context &_context);
     void apply();
+    void bursts();
   private:
     Context *context;
 };

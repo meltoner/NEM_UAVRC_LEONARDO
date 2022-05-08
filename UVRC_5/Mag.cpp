@@ -18,7 +18,7 @@ void Mag::setup(Context &_context){
   context = &_context;
 
   while(!mag.begin()) 
-    Serial.println("HMC5883 not detected!");
+    Serial.println(F("HMC5883 not detected!"));
 
   sensor_t sensor;
   mag.getSensor(&sensor);  
@@ -29,7 +29,7 @@ void Mag::setup(Context &_context){
   }
 
   initMagOffset();  
-  Serial.println("Mag sensor ready"); 
+  Serial.println(F("Mag sensor ready"));
 }
 
 void Mag::apply(){

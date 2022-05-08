@@ -31,8 +31,9 @@ class Context{
     double latlng[2] = {0, 0}; // gps position
     double TARGET_LAT = 37.9584512; //Akropolis
     double TARGET_LNG = 23.7502464;
-    byte toHomeSpeed = 40;
+    byte toHomeSpeed = 50;
     float toHomeSpeedWeight = 1;
+    boolean toHomeWait = false;
 
     boolean toHomeActive = false;
 
@@ -53,9 +54,9 @@ class Context{
     byte actuators[2] = {0, 0}; // servo, speed
   
     // Invoker variables - execution functions frequencies
-    int intervals[7] = {10, 52, 104, 506, 1008, 2003, 10000};
+    int intervals[8] = {10, 52, 104, 506, 1008, 2003, 10000, 3000};
     unsigned long now = millis();
-    unsigned long timers[7] = {now, now, now, now, now, now};
+    unsigned long timers[8] = {now, now, now, now, now, now, now};
 
   private:
     int _pin;

@@ -17,7 +17,7 @@ void Steer::setup(Context &_context){
   steer.attach(_pin);
   on = true;
   setSteer(center);
-  Serial.println("Steer ready.");
+  Serial.println(F("Steer ready."));
 }
 
 int Steer::getHeadingDifference(){

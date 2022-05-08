@@ -26,19 +26,22 @@ void Home::apply(){
   if(context->toHomeActive){  
     context->targets[0] = context->targets[1];
 
-    if(context->toHomeSpeedWeight == 0){
-      context->toHomeSpeedWeight = 1;
+    if(context->targets[2] > 10)
+      context->toHomeSpeedWeight = 0.8;
+    else
+      context->toHomeSpeedWeight = 0.7;
 
-
-      if(context->targets[2] > 10)
-        context->toHomeSpeedWeight = 1;
-      else
-        context->toHomeSpeedWeight = 0.7;
-
-    }else{
+    if(context->toHomeWait){
       context->toHomeSpeedWeight = 0;
+      context->intervals[7] = 8000;
+    }else{
+      context->intervals[7] = 2500;
     }
 
   }
 
+}
+
+void Home::bursts(){
+  context->toHomeWait = !context->toHomeWait;
 }

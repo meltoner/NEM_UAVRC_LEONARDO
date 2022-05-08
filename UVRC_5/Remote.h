@@ -16,9 +16,10 @@ class Remote{
     void setup(Context &_context);
     void apply();
     int readChannel(byte channelInput, int minLimit, int maxLimit, int defaultValue);
+    void telemetry();
     Context *context;
   private:
-    IBusBM IBus; // IBus object 
+    IBusBM IBus; // IBus object
 };
 
 #endif

@@ -14,7 +14,7 @@ Gps::Gps(int pin){}
 void Gps::setup(Context &_context){
   context = &_context;
   gpsPort.begin(9600);
-  Serial.println("Gps ready.");
+  Serial.println(F("Gps ready."));
 }
 
 void Gps::apply(){

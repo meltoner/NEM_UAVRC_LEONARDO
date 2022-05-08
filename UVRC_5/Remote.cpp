@@ -15,8 +15,12 @@ Remote::Remote(int pin){
 void Remote::setup(Context &_context){
   context = &_context;
   IBus.begin(Serial1);
+  //IBus.addSensor(0);
+  //IBus.addSensor(3);
+  //IBus.addSensor(IBUSS_TEMP );
   delay(200);
-  Serial.println("IBUS ready.");
+
+  Serial.println(F("IBUS ready."));
 }
 
 int Remote::readChannel(byte channelInput, int minLimit, int maxLimit, int defaultValue){ 
@@ -29,4 +33,10 @@ int Remote::readChannel(byte channelInput, int minLimit, int maxLimit, int defau
 void Remote::apply(){
   for(int i = 0; i < EXT_SENSORS; i++)
    context->ext_sensors[i] = (byte)readChannel(i, 0, 255, 0);
+}
+
+void Remote::telemetry(){
+  //IBus.setSensorMeasurement(0,5);  
+  //IBus.setSensorMeasurement(3,5);  
+  //IBus.setSensorMeasurement(2,600);
 }

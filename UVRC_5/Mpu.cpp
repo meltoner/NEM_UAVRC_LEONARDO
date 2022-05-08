@@ -24,12 +24,15 @@ void Mpu::setup(Context &_context){
   Wire.setWireTimeout(3000, true); //timeout value in uSec
   
   while(sensor.begin() != 0)
-    Serial.println("MPU6050 not detected!");
+    Serial.println(F("MPU6050 not detected!"));
 
-  Serial.println("Do not move");
-  delay(1000); 
-  sensor.calcOffsets();
-  Serial.println("MPU ready.");
+  Serial.println(F("Do not move"));
+  delay(1000);
+
+  sensor.calcOffsets(true, true);
+
+  Serial.println(F("MPU ready."));
+
 }
 
 void Mpu::update(){
