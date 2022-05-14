@@ -41,7 +41,6 @@
 #include "Home.h"
 #include "Blink.h"
 #include "Battery.h"
-
 #include <EEPROM.h>
 
 Context context(0);
@@ -57,7 +56,6 @@ Home home(0);
 Blink blink(0);
 Battery battery(0);
 
-
 //-----------------------------------------
 
 void setup() {
@@ -65,11 +63,11 @@ void setup() {
   context.setup();
   blink.setup(context);
   throttle.setup(context);
-
+  delay(2000);
   mpu.setup(context);
   delay(2000);
 
-  Serial.println(F("Powering up"));
+  //Serial.println(F("Powering up"));
   remote.setup(context);
   mag.setup(context);
   steer.setup(context);
@@ -77,7 +75,7 @@ void setup() {
   battery.setup(context);
   home.setup(context);
   invoker.setup(context);
-  Serial.println(F("Setup done"));
+  //Serial.println(F("Setup done"));
 
 }
 
@@ -99,9 +97,8 @@ void apply_invoker(){
 }
 
 void apply_slow_invoker(){ 
-  //every 0.5 second printout allenviromental variables
   //context.apply();
-  remote.telemetry();
+  remote.telemetry(); //every 0.5 second printout allenviromental variables
 }
 
 void heartBeat(){

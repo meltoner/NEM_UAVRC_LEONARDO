@@ -9,18 +9,18 @@
 
 #define EXT_SENSORS 10
 
-Remote::Remote(int pin){
+Remote::Remote(byte pin){
 }
 
 void Remote::setup(Context &_context){
   context = &_context;
   IBus.begin(Serial1);
-  //IBus.addSensor(0);
+  IBus.addSensor(IBUSS_RPM  );
   //IBus.addSensor(3);
   //IBus.addSensor(IBUSS_TEMP );
   delay(200);
 
-  Serial.println(F("IBUS ready."));
+  //Serial.println(F("IBUS ready."));
 }
 
 int Remote::readChannel(byte channelInput, int minLimit, int maxLimit, int defaultValue){ 
@@ -36,7 +36,7 @@ void Remote::apply(){
 }
 
 void Remote::telemetry(){
-  //IBus.setSensorMeasurement(0,5);  
+  IBus.setSensorMeasurement(IBUSS_RPM  ,5);  
   //IBus.setSensorMeasurement(3,5);  
   //IBus.setSensorMeasurement(2,600);
 }

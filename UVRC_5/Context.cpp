@@ -7,7 +7,7 @@
 #include "Context.h"
 #include <EEPROM.h>
 
-Context::Context(int pin){  
+Context::Context(byte pin){  
   _pin = pin;
 }
 
@@ -17,49 +17,35 @@ void Context::setup(){
     EEPROM.get(sizeof(long), TARGET_LNG);
 }
 
-void Context::reflectSensor(float value, int precission){
+void Context::reflectSensor(float value, byte precission){
   Serial.print(value, value == 0?0:precission);
-  Serial.print(F(" "));
+  Serial.print(" ");
 }
 
-void Context::apply(){
-  // todo this consumes a lot of memory is there any other way to do it
+void Context::apply(){ // takes 4% of memory
 
-  // Battery voltage
   reflectSensor(capacity, 1); 
   reflectSensor(voltage, 1); 
 
-  // mpu: x, y, z, mag: z
   for(int i = 0; i < 4; i++)
-    reflectSensor(positional[i], 1);
+    reflectSensor(positional[i], 1); // mpu: x, y, z, mag: z
 
   // 0 {mag offset}, 1 {true heading (mpu z + mag offset)}, 2 {difference of true heading and target heading}
   for(int i = 0; i < 3; i++)
-    reflectSensor(derivatives[i], 1);// offset, heading
+    reflectSensor(derivatives[i], 1); // offset, heading
 
-  // Target heading
-  reflectSensor(targets[0], 1); 
-
-  // GPS return to home target heading
-  reflectSensor(targets[1], 1);
-
- // Gps return to home target distance in meters
-  reflectSensor(targets[2], 1); 
-
- // Servo Steer value
- reflectSensor(actuators[0], 0);
-
-  // Throttle
-  reflectSensor(actuators[1], 0); 
-
-  // GPS latitute  
-  reflectSensor(latlng[0], 6);
-  // GPS longditude
-  reflectSensor(latlng[1], 6);
+  for(int i = 0; i < 2; i++)
+    reflectSensor(actuators[i], 1); // Servo Steer value, Throttle    
 
   // Flysky remote control values
   for(int i = 0; i < 10; i++)
     reflectSensor(ext_sensors[i], 0);
+
+  for(int i = 0; i < 2; i++)
+    reflectSensor(latlng[i], 6); // current gps
+
+  for(int i = 0; i < 3; i++)
+    reflectSensor(targets[i], 1); // Target heading, GPS return to home target heading, Gps return to home target distance in meters
   
   Serial.println(F("")); 
 

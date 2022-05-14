@@ -11,7 +11,7 @@
 
 class Throttle{
   public:
-    Throttle(int pin);
+    Throttle(byte pin);
     void setup(Context &_context);
     void apply();
     void setThrottle(int value, int limiter);
@@ -19,7 +19,7 @@ class Throttle{
   private:
     Context *context;
     Servo throttle;
-    int _pin;
+    byte _pin;
 };
 
 #endif

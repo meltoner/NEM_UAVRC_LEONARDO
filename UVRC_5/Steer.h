@@ -11,7 +11,7 @@
 
 class Steer{
   public:
-    Steer(int pin);
+    Steer(byte pin);
     void setup(Context &_context);
     void apply();
     void setSteer(int value);
@@ -22,7 +22,7 @@ class Steer{
     //int target = 0; //vehicle target heading
 
   private:
-    int _pin;
+    byte _pin;
     unsigned long applied = 0;
     boolean on = false;
     Context *context;

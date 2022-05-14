@@ -8,7 +8,7 @@
 #include "Invoker.h"
 
 
-Invoker::Invoker(int length){  
+Invoker::Invoker(byte length){  
 }
 
 void Invoker::setup(Context &_context){

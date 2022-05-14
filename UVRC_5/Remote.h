@@ -12,7 +12,7 @@
 
 class Remote{
   public:
-    Remote(int pin);
+    Remote(byte pin);
     void setup(Context &_context);
     void apply();
     int readChannel(byte channelInput, int minLimit, int maxLimit, int defaultValue);

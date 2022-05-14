@@ -7,7 +7,7 @@
 #include "Battery.h" 
 #include "Context.h"
 
-Battery::Battery(int pin){}
+Battery::Battery(byte pin){}
 
 void Battery::setup(Context &_context){
   context = &_context;

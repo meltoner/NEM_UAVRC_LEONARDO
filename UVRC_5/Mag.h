@@ -12,7 +12,7 @@
 
 class Mag{
   public:
-    Mag(int pin);
+    Mag(byte pin);
     void setup(Context &_context);
     void apply();
     int pruneDegrees(float value);
@@ -21,7 +21,7 @@ class Mag{
     void updateMagOffset();
   private:
     Context *context;
-    int _pin;
+    byte _pin;
     Adafruit_HMC5883_Unified mag;
     sensors_event_t event; 
 };

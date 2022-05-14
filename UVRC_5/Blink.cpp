@@ -7,7 +7,7 @@
 #include "Blink.h" 
 #include "Context.h"
 
-Blink::Blink(int pin){}
+Blink::Blink(byte pin){}
 
 void Blink::setup(Context &_context){
   context = &_context;

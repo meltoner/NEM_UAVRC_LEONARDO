@@ -9,12 +9,12 @@
 #include <TinyGPS++.h>
 #include "Context.h"
 
-Gps::Gps(int pin){}
+Gps::Gps(byte pin){}
 
 void Gps::setup(Context &_context){
   context = &_context;
   gpsPort.begin(9600);
-  Serial.println(F("Gps ready."));
+  //Serial.println(F("Gps ready."));
 }
 
 void Gps::apply(){

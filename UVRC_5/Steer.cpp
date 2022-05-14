@@ -8,7 +8,7 @@
 #include <Servo.h>
 #include "Context.h"
 
-Steer::Steer(int pin){  
+Steer::Steer(byte pin){  
   _pin = pin;
 }
 
@@ -17,7 +17,7 @@ void Steer::setup(Context &_context){
   steer.attach(_pin);
   on = true;
   setSteer(center);
-  Serial.println(F("Steer ready."));
+  //Serial.println(F("Steer ready."));
 }
 
 int Steer::getHeadingDifference(){

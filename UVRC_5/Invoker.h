@@ -11,7 +11,7 @@
 
 class Invoker{
   public:
-    Invoker(int length);
+    Invoker(byte length);
     void setup(Context &_context);
     int apply();
   private:

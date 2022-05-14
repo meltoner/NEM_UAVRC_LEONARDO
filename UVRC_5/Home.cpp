@@ -23,20 +23,29 @@ void Home::apply(){
   context->toHomeActive = context->isSwitchA() && context->isSwitchD() && context->isGPSLocked;
   
   // Derive target heading and speed from gps target
-  if(context->toHomeActive){  
+  if(context->toHomeActive){
     context->targets[0] = context->targets[1];
 
-    if(context->targets[2] > 10)
-      context->toHomeSpeedWeight = 0.8;
-    else
-      context->toHomeSpeedWeight = 0.7;
+    if(context->targets[2] > 25){
 
-    if(context->toHomeWait){
-      context->toHomeSpeedWeight = 0;
-      context->intervals[7] = 8000;
+      context->toHomeSpeedWeight = 0.9;
+      if(context->toHomeWait){
+        context->toHomeSpeedWeight = 0;
+        context->intervals[7] = 5000;
+      }else{
+        context->intervals[7] = 5000;
+      }
+
     }else{
-      context->intervals[7] = 2500;
+      context->toHomeSpeedWeight = 0.7;
+      if(context->toHomeWait){
+        context->toHomeSpeedWeight = 0;
+        context->intervals[7] = 8000;
+      }else{
+        context->intervals[7] = 2500;
+      }
     }
+
 
   }
 

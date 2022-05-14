@@ -12,7 +12,7 @@
 
 class Gps{
   public:
-    Gps(int pin);
+    Gps(byte pin);
     void setup(Context &_context);
     void apply();
     void processTarget();    

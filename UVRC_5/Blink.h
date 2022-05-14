@@ -10,7 +10,7 @@
 
 class Blink{
   public:
-    Blink(int pin);
+    Blink(byte pin);
     void setup(Context &_context);
     void apply();
   private:

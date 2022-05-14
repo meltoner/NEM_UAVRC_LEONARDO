@@ -10,7 +10,7 @@
 
 class Battery{
   public:
-    Battery(int pin);
+    Battery(byte pin);
     void setup(Context &_context);
     void apply();
   private:

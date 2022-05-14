@@ -9,7 +9,7 @@
 #include <Adafruit_Sensor.h>
 #include <Adafruit_HMC5883_U.h>
 
-Mag::Mag(int pin){  
+Mag::Mag(byte pin){  
   _pin = pin;
   mag = Adafruit_HMC5883_Unified(12345);
 }
@@ -17,8 +17,8 @@ Mag::Mag(int pin){
 void Mag::setup(Context &_context){ 
   context = &_context;
 
-  while(!mag.begin()) 
-    Serial.println(F("HMC5883 not detected!"));
+  while(!mag.begin()); 
+    //Serial.println(F("HMC5883 not detected!"));
 
   sensor_t sensor;
   mag.getSensor(&sensor);  
@@ -84,7 +84,6 @@ void Mag::initMagOffset(){
 
 void Mag::updateMagOffset(){
   if(abs(context->positional[0]) < 5) // is horizotal
-    initMagOffset();
-    //context->derivatives[0] = context->derivatives[0]*0.8 + getOffset()*0.2;
+    initMagOffset(); 
 }
 

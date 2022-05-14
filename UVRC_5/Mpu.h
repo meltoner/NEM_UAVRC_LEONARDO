@@ -11,13 +11,13 @@
 
 class Mpu{
   public:
-    Mpu(int pin);
+    Mpu(byte pin);
     void setup(Context &_context);
     void apply();
     void update();
   private:
     Context *context;
-    int _pin;
+    byte _pin;
 };
 
 #endif

@@ -10,10 +10,10 @@
 
 class Context{
   public:
-    Context(int pin);
+    Context(byte pin);
     void setup();
     void apply();
-    void reflectSensor(float value, int precission);
+    void reflectSensor(float value, byte precission);
     int pruneDegrees(float value);
 
     boolean isSwitchA();
@@ -28,13 +28,15 @@ class Context{
     //-----------------------
     // GPS related
     boolean isGPSLocked = false;
-    double latlng[2] = {0, 0}; // gps position
+
+    double latlng[2] PROGMEM = {0, 0}; // gps position
     double TARGET_LAT = 37.9584512; //Akropolis
     double TARGET_LNG = 23.7502464;
+
     byte toHomeSpeed = 50;
     float toHomeSpeedWeight = 1;
-    boolean toHomeWait = false;
 
+    boolean toHomeWait = false;
     boolean toHomeActive = false;
 
     // Positional related values
@@ -48,18 +50,19 @@ class Context{
     // Power related
     float voltage = 0;
     byte capacity = 0;
+
     boolean isLowBattery = false;
 
     // Server and motor values
     byte actuators[2] = {0, 0}; // servo, speed
   
     // Invoker variables - execution functions frequencies
-    int intervals[8] = {10, 52, 104, 506, 1008, 2003, 10000, 3000};
+    int intervals[8] = {10, 52, 104, 506, 1008, 3003, 10000, 3000};
     unsigned long now = millis();
     unsigned long timers[8] = {now, now, now, now, now, now, now};
 
   private:
-    int _pin;
+    byte _pin;
 };
 
 #endif
