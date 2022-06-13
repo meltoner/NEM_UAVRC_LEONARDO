@@ -14,6 +14,8 @@ class Context{
     void setup();
     void apply();
     void reflectSensor(float value, byte precission);
+    int transferFunction(int value, int theshold, int add, int divider);
+    
     int pruneDegrees(float value);
 
     boolean isSwitchA();

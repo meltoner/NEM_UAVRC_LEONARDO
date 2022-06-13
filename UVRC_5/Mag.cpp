@@ -29,7 +29,7 @@ void Mag::setup(Context &_context){
   }
 
   initMagOffset();  
-  Serial.println(F("Mag sensor ready"));
+  //Serial.println(F("Mag sensor ready"));
 }
 
 void Mag::apply(){

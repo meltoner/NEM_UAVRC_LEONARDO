@@ -21,11 +21,10 @@ void Throttle::setup(Context &_context){
 }
 
 void Throttle::apply(){
-
   if(context->toHomeActive)    
     setThrottle( (int)( (float)context->toHomeSpeed * context->toHomeSpeedWeight), 50);    
   else
-    setThrottle(transferFunction(context->ext_sensors[2], 15, 20, 300), context->ext_sensors[4]);
+    setThrottle(context->transferFunction(context->ext_sensors[2], 15, 20, 300), context->ext_sensors[4]);
 }
 
 void Throttle::setThrottle(int value, int limiter){
@@ -42,16 +41,3 @@ void Throttle::setThrottle(int value, int limiter){
     throttle.writeMicroseconds(pwmVal); // Send signal to ESC.  
   }  
 }
-
-int Throttle::transferFunction(int value, int theshold, int add, int divider){
-   float x = (float)value;    
-    if(x<theshold){
-      x = 0;
-    }else{
-      x = x+add;
-      x = (x * (x/divider))+(10/2);
-    }
-    return (int)x;
-}
-
- 

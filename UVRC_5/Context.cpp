@@ -83,3 +83,21 @@ void Context::setGPSTarget(double LAT, double LNG){
   EEPROM.put(0, LAT);
   EEPROM.put(sizeof(long), LNG);
 }
+
+int Context::transferFunction(int value, int theshold, int add, int divider){
+  //gates and transforms a linear to a non linear curve, accelerating faster as we reach the max value 
+
+  float x = (float)value;
+  float sign = 1;
+
+  if(value < 0)
+    sign = -1;
+
+  if(abs(x) < theshold){
+    x = 0;
+  }else{
+    x = x + add * sign;
+    x = (sign * x * (x / divider )) + (theshold * sign) / 3;
+  }
+  return (int)x;
+}

@@ -25,12 +25,9 @@ void Mpu::setup(Context &_context){
   
   while(sensor.begin() != 0);
     //Serial.println(F("MPU6050 not detected!"));
-
   //Serial.println(F("Do not move"));
   delay(1000);
-
   sensor.calcOffsets(true, true);
-
   //Serial.println(F("MPU ready."));
 
 }

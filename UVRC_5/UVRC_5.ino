@@ -92,18 +92,18 @@ void apply_fast_invoker(){
 
 void apply_invoker(){
   gps.apply();
-  steer.hasNewDegree();
+  //steer.hasNewDegree();
   home.apply();
 }
 
-void apply_slow_invoker(){ 
-  //context.apply();
-  remote.telemetry(); //every 0.5 second printout allenviromental variables
+void apply_slow_invoker(){
+  context.apply(); // every 0.5 second printout / log enviromental variables
+  remote.telemetry(); 
 }
 
 void heartBeat(){
   //dynamic periodicity 
-  // Every : 2s when no gps, 1sec when gps lock, 0.5 seconds when returing to home is active, 0.1 second when power is less than 30%.
+  // Every : 3s when no gps, 1sec when gps lock, 0.5 seconds when returing to home is active, 0.1 second when power is less than 30%.
   blink.apply();
 }
 
@@ -115,7 +115,8 @@ void apply_slower_invoker(){
 
 void updateMagOffset(){
   //10 seconds period
-  mag.updateMagOffset();
+  if(context.toHomeActive)
+    mag.updateMagOffset();
 }
 
 void run_invoker(int i){
@@ -134,5 +135,9 @@ void run_invoker(int i){
 
 void loop(){
   mpu.update(); 
-  run_invoker(invoker.apply());
+  int actionIndex = invoker.apply();
+  while(actionIndex != 100){
+    run_invoker(actionIndex);
+    actionIndex = invoker.apply();
+  }
 }

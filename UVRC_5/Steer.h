@@ -2,6 +2,7 @@
   Steer.h - Library for wraping the functions controling Steer
   Created Konstantinos Papageorgiou  
 */
+
 #ifndef Steer_h
 #define Steer_h
 
@@ -16,17 +17,15 @@ class Steer{
     void apply();
     void setSteer(int value);
     int getHeadingDifference();
-    boolean hasNewDegree();
-
+    //boolean hasNewDegree();
     int center = 86;
-    //int target = 0; //vehicle target heading
 
   private:
     byte _pin;
-    unsigned long applied = 0;
     boolean on = false;
-    Context *context;
     Servo steer;
+    unsigned long applied = 0;
+    Context *context;
 };
 
 #endif

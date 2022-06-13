@@ -24,6 +24,6 @@ void Battery::apply(){
 
   context->isLowBattery = context->capacity < 40;
   if(context->isLowBattery)
-    context->intervals[5] = 100;
+    context->intervals[5] = 60;
 
 }
